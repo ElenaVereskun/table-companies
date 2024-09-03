@@ -23,8 +23,8 @@ input {
   display: flex;
   padding: 15px;
 }
-.select {
-  background-color: antiquewhite;
+.checkbox {
+  height: 25px;
 }
 .buttons {
   display: flex;

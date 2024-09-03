@@ -35,8 +35,8 @@ const Table = () => {
   const handleAddCompany = () => {
     dispatch(
       addCompany({
-        name: "New Company",
-        address: "New Address",
+        name: " ",
+        address: " ",
         id: companies.length + 1,
       }),
     )
@@ -85,6 +85,7 @@ const Table = () => {
                       selected: e.target.checked,
                     })
                   }
+                  className={styles.checkbox}
                 />
               </td>
               <td>
@@ -93,6 +94,11 @@ const Table = () => {
                   onChange={e =>
                     updateCompanyInfo({ ...company, name: e.target.value })
                   }
+                  style={{
+                    backgroundColor: company.selected
+                      ? "lightblue"
+                      : "transparent",
+                  }}
                 />
               </td>
               <td>
@@ -101,6 +107,11 @@ const Table = () => {
                   onChange={e =>
                     updateCompanyInfo({ ...company, address: e.target.value })
                   }
+                  style={{
+                    backgroundColor: company.selected
+                      ? "lightblue"
+                      : "transparent",
+                  }}
                 />
               </td>
             </tr>

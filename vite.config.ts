@@ -4,6 +4,7 @@ import { resolve } from "path"
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: "/table-companies/",
   plugins: [react()],
   server: {
     open: true,
