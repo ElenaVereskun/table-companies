@@ -55,12 +55,13 @@ const Table = () => {
       <table className={styles.table}>
         <thead>
           <tr>
-            <th>
+            <th className={styles.label}>
               <input
                 type="checkbox"
                 onChange={handleSelectAll}
                 checked={selectAll}
               />
+              <label>Выделить всё</label>
             </th>
             <th>Название компании</th>
             <th>Адрес</th>
