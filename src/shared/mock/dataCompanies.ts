@@ -1,4 +1,4 @@
-import ICompany from "../types/ICompany"
+import type ICompany from "../types/ICompany"
 
 export const data: ICompany[] = [
   {

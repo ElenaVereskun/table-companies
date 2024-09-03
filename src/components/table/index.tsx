@@ -1,52 +1,53 @@
 import { useState } from "react"
-import { useSelector, useDispatch } from "react-redux"
-import { RootState } from "../../store/store"
-import { addCompany, removeCompany } from "../../store/slice/slice"
+import type { Company } from "@/store/company"
+import {
+  addCompany,
+  changeCompanyInfo,
+  removeSelectedCompanies,
+  selectCompanies,
+} from "@/store/company"
 
 import styles from "./styles.module.css"
+import { useAppDispatch, useAppSelector } from "@/store/hooks"
 
 const Table = () => {
-  const companies = useSelector((state: RootState) => state.company.companies)
-  console.log(companies)
-  const dispatch = useDispatch()
+  const companies = useAppSelector(selectCompanies)
+
+  const dispatch = useAppDispatch()
   const [selectAll, setSelectAll] = useState(false)
 
-  const handleCheckboxChange = (index: number) => {
-    try {
-      const updatedCompanies = [...companies]
-      updatedCompanies[index].selected = !updatedCompanies[index].selected
-      setSelectAll(updatedCompanies.every(company => company.selected))
-    } catch (error) {
-      console.error("Error: ", error)
-    }
+  const handleCheckboxChange = (company: Company) => {
+    dispatch(changeCompanyInfo(company))
   }
 
   const handleSelectAll = () => {
-    try {
-      const updatedCompanies = companies.map(company => ({
-        ...company,
-        selected: !selectAll,
-      }))
-      setSelectAll(!selectAll)
-    } catch (error) {
-      console.error("Error: ", error)
-    }
+    companies.forEach(company =>
+      dispatch(
+        changeCompanyInfo({
+          ...company,
+          selected: !selectAll,
+        }),
+      ),
+    )
+    setSelectAll(!selectAll)
   }
 
   const handleAddCompany = () => {
-    try {
-      dispatch(addCompany({ name: "New Company", address: "New Address" }))
-    } catch (error) {
-      console.error("Error: ", error)
-    }
+    dispatch(
+      addCompany({
+        name: "New Company",
+        address: "New Address",
+        id: companies.length + 1,
+      }),
+    )
   }
 
-  const handleRemoveSelectedCompanies = () => {
-    try {
-      dispatch(removeCompany())
-    } catch (error) {
-      console.error("Error: ", error)
-    }
+  const removeCompanies = () => {
+    dispatch(removeSelectedCompanies())
+  }
+
+  const updateCompanyInfo = (company: Company) => {
+    dispatch(changeCompanyInfo(company))
   }
 
   return (
@@ -76,20 +77,29 @@ const Table = () => {
               <td>
                 <input
                   type="checkbox"
-                  checked={company.selected}
-                  onChange={() => handleCheckboxChange(index)}
+                  checked={Boolean(company.selected)}
+                  onChange={e =>
+                    handleCheckboxChange({
+                      ...company,
+                      selected: e.target.checked,
+                    })
+                  }
                 />
               </td>
               <td>
                 <input
                   value={company.name}
-                  onChange={e => console.log("Edit Name")}
+                  onChange={e =>
+                    updateCompanyInfo({ ...company, name: e.target.value })
+                  }
                 />
               </td>
               <td>
                 <input
                   value={company.address}
-                  onChange={e => console.log("Edit Address")}
+                  onChange={e =>
+                    updateCompanyInfo({ ...company, address: e.target.value })
+                  }
                 />
               </td>
             </tr>
@@ -100,10 +110,7 @@ const Table = () => {
         <button className={styles.button} onClick={handleAddCompany}>
           Добавить компанию
         </button>
-        <button
-          className={styles.button}
-          onClick={handleRemoveSelectedCompanies}
-        >
+        <button className={styles.button} onClick={removeCompanies}>
           Удалить выбранные компании
         </button>
       </div>
