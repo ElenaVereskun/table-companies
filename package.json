@@ -12,7 +12,9 @@
     "format": "prettier --write .",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "gh-pages": "gh-pages -d build",
+    "deploy": "npm run build && npm run gh-pages"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.0.1",
@@ -33,6 +35,7 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-prettier": "^5.1.3",
+    "gh-pages": "^6.1.1",
     "jsdom": "^23.2.0",
     "prettier": "^3.2.1",
     "typescript": "^5.3.3",

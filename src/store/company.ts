@@ -43,7 +43,6 @@ export const companySlice = createSlice({
         company => company.id === action.payload.id,
       )
 
-      // If company is found, update its information
       if (companyIndex !== -1) {
         state.companies[companyIndex] = {
           ...state.companies[companyIndex],

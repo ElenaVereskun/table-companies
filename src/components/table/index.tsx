@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useAppDispatch, useAppSelector } from "@/store/hooks"
 import type { Company } from "@/store/company"
 import {
   addCompany,
@@ -8,7 +9,6 @@ import {
 } from "@/store/company"
 
 import styles from "./styles.module.css"
-import { useAppDispatch, useAppSelector } from "@/store/hooks"
 
 const Table = () => {
   const companies = useAppSelector(selectCompanies)
